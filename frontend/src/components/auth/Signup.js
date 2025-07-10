@@ -12,10 +12,11 @@ function Signup() {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    phone: '',
+    nickname: '',
     email: '',
-    altEmail: '',
-    address: '',
+    confirmEmail: '',
+    password: '',
+    confirmPassword: '',
     userType: 'client'
   });
 
@@ -33,7 +34,6 @@ function Signup() {
     }
   };
 
-  // Google Sign-Up handler
   const handleGoogleSignup = async (credentialResponse) => {
     try {
       const { credential } = credentialResponse;
@@ -63,7 +63,7 @@ function Signup() {
     }
   };
 
-  const stepTitles = ['Basic Details', 'Contact Details', 'Verification'];
+  const stepTitles = ['Basic Details', 'Security Setup', 'User Type'];
 
   return (
     <div className="signup-wrapper">
@@ -77,7 +77,6 @@ function Signup() {
         <p className="login-redirect">Already a client or employee? <span onClick={() => navigate('/login')}>Sign In</span></p>
         <h3>Sign Up</h3>
 
-        {/* Google Sign-Up */}
         <div style={{ marginBottom: '1.5rem' }}>
           <GoogleLogin
             onSuccess={handleGoogleSignup}
@@ -87,7 +86,12 @@ function Signup() {
 
         <div className="step-indicator">
           {stepTitles.map((label, index) => (
-            <div key={index} className={`step ${step === index + 1 ? 'active' : ''}`}>
+            <div
+              key={index}
+              className={`step ${step === index + 1 ? 'active' : ''}`}
+              onClick={() => setStep(index + 1)}
+              style={{ cursor: 'pointer' }}
+            >
               <div className="circle">{index + 1}</div>
               <span>{label}</span>
             </div>
@@ -99,23 +103,22 @@ function Signup() {
             <>
               <input name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} />
               <input name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} />
+              <input name="nickname" placeholder="What do we call you?" value={formData.nickname} onChange={handleChange} />
+              <input name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} />
             </>
           )}
           {step === 2 && (
             <>
-              <input name="phone" placeholder="We Can Call You" value={formData.phone} onChange={handleChange} />
-              <input name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} />
-              <input name="altEmail" placeholder="Alternative Email" value={formData.altEmail} onChange={handleChange} />
+              <input name="confirmEmail" placeholder="Confirm Email Address" value={formData.confirmEmail} onChange={handleChange} />
+              <input name="password" type="password" placeholder="Password" value={formData.password} onChange={handleChange} />
+              <input name="confirmPassword" type="password" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} />
             </>
           )}
           {step === 3 && (
-            <>
-              <input name="address" placeholder="Business Address" value={formData.address} onChange={handleChange} />
-              <select name="userType" value={formData.userType} onChange={handleChange}>
-                <option value="client">I'm a Client</option>
-                <option value="employee">I'm an Employee</option>
-              </select>
-            </>
+            <select name="userType" value={formData.userType} onChange={handleChange}>
+              <option value="client">I'm a Client</option>
+              <option value="employee">I'm an Employee</option>
+            </select>
           )}
         </form>
 

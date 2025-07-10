@@ -27,7 +27,7 @@ function Header() {
             <li><Link to="/about" style={{ '--i': 1 }} onClick={toggleMenu}>About</Link></li>
             <li><Link to="/services" style={{ '--i': 2 }} onClick={toggleMenu}>Services</Link></li>
             <li><Link to="/portfolio" style={{ '--i': 3 }} onClick={toggleMenu}>Portfolio</Link></li>
-            <li><Link to="/contact" style={{ '--i': 4 }} onClick={toggleMenu}>Let's Connect</Link></li>
+            <li><Link to="/letsconnect" style={{ '--i': 4 }} onClick={toggleMenu}>Let's Connect</Link></li>
 
             <li className="header-mobile-auth">
               <Link to="/login" className="header-login-button" onClick={toggleMenu}>Login</Link>

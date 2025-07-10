@@ -14,6 +14,7 @@ import Testimonials from './components/pages/homepage/Testimonials/Testimonials'
 import About from './components/pages/about/About';
 import Services from './components/pages/Services/Services';
 import PortfolioPage from './components/pages/portfolio/PortfolioPage';
+import LetsConnect from './components/pages/LetsConnect/LetsConnect';
 
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
@@ -104,6 +105,7 @@ function AppWithRoutes() {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="/letsconnect" element={<LetsConnect />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 

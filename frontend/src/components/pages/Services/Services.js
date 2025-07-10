@@ -2,7 +2,7 @@ import React from 'react';
 import './Services.css';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import AboutBanner from '../../../assets/images/AboutBanner.jpg';
+import AboutBanner from '../../../assets/images/ServicesBanner.jpg';
 
 const designServices = [
   'Brand Identity',
