@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import Loader from '../common/Loader';
-import API from '../../utils/api';
-import { jwtDecode } from 'jwt-decode';
 import { GoogleLogin } from '@react-oauth/google';
-
+import { jwtDecode } from 'jwt-decode';
+// import API from '../../utils/api'; // keeping this for later use
 
 function Login() {
   const navigate = useNavigate();
@@ -14,56 +13,60 @@ function Login() {
   const [userType, setUserType] = useState('client');
   const [loading, setLoading] = useState(false);
 
-  // Normal login (email + password)
+  // Basic login handler
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await API.post("auth/login/", { email, password });
-      const token = res.data.access;
-      localStorage.setItem("token", token);
+      const role = userType === 'employee' ? 'employee' : 'client';
+      const mockUser = {
+        email,
+        role,
+        name: 'Demo User',
+      };
 
-      const userRes = await API.get("auth/user/");
-      const user = userRes.data;
-      localStorage.setItem("user", JSON.stringify(user));
+      const fakeToken = 'fake-jwt-token';
+      localStorage.setItem('token', fakeToken);
+      localStorage.setItem('user', JSON.stringify(mockUser));
 
-      if (user.role === 'client') {
+      if (role === 'client') {
         navigate('/client-dashboard');
-      } else if (user.role === 'employee') {
+      } else if (role === 'employee') {
         navigate('/employee-dashboard');
       } else {
         alert("Unknown user role.");
       }
     } catch (err) {
       console.error(err);
-      alert("Login failed. Check credentials or verify email.");
+      alert("Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Google Login logic
+  // GOOGLE LOGIN (Active)
   const handleGoogleLogin = async (credentialResponse) => {
     setLoading(true);
     try {
       const { credential } = credentialResponse;
       const decoded = jwtDecode(credential);
 
-      const res = await API.post("auth/google/", {
-        email: decoded.email
-      });
+      const role = decoded.email.includes('employee') ? 'employee' : 'client';
 
-      const token = res.data.access;
-      localStorage.setItem("token", token);
+      const mockUser = {
+        email: decoded.email,
+        role,
+        name: decoded.name || 'Google User',
+      };
 
-      const userRes = await API.get("auth/user/");
-      const user = userRes.data;
-      localStorage.setItem("user", JSON.stringify(user));
+      const fakeToken = 'google-jwt-token';
+      localStorage.setItem("token", fakeToken);
+      localStorage.setItem("user", JSON.stringify(mockUser));
 
-      if (user.role === 'client') {
+      if (role === 'client') {
         navigate('/client-dashboard');
-      } else if (user.role === 'employee') {
+      } else if (role === 'employee') {
         navigate('/employee-dashboard');
       } else {
         alert("Unknown role from Google login");
@@ -94,11 +97,13 @@ function Login() {
         <form className="login-form" onSubmit={handleLogin}>
           <h2>Sign In</h2>
 
-          {/* 🔐 Google Sign-In Button */}
+          {/* Google Sign-In Button */}
           <GoogleLogin
             onSuccess={handleGoogleLogin}
             onError={() => alert("Google Sign In Failed")}
           />
+
+          <div className="divider">or</div>
 
           <input
             type="email"
@@ -116,7 +121,11 @@ function Login() {
             required
           />
 
-          <select value={userType} onChange={(e) => setUserType(e.target.value)} required>
+          <select
+            value={userType}
+            onChange={(e) => setUserType(e.target.value)}
+            required
+          >
             <option value="client">I'm a Client</option>
             <option value="employee">I'm an Employee</option>
           </select>
