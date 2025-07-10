@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ClientHeader.css';
 import logo from '../../../Bowhle-WHITE.png';
 import avatar from '../../../assets/images/Avatar-1.png';
+import SubmitBriefModal from './SubmitBriefModal.js';
 
-// This component renders the header for the client dashboard,
+// This component renders the header for the client dashboard
 
 function ClientHeader() {
   const currentDate = new Date().toLocaleDateString('en-GB');
+  const [showModal, setShowModal] = useState(false); //
 
   return (
     <header className="client-header">
@@ -19,8 +21,12 @@ function ClientHeader() {
       <div className="header-right">
         <span className="welcome-text">WELCOME, CLIENT</span>
         <img src={avatar} alt="Client Avatar" className="avatar" />
-        <button className="submit-btn">Submit a Brief</button>
+        <button className="submit-btn" onClick={() => setShowModal(true)}>
+          Submit a Brief
+        </button>
       </div>
+
+      {showModal && <SubmitBriefModal onClose={() => setShowModal(false)} />}
     </header>
   );
 }
