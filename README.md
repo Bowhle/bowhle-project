@@ -32,6 +32,12 @@ The application is divided into two key areas:
 
 ## 👩‍💻 Frontend – Samantha B
 
+### Setup:
+```bash
+npm install axios react-router-dom @react-oauth/google jwt-decode
+npm start
+```
+
 Handled all interface design and client-side development.
 
 ### Key Features:
@@ -60,18 +66,44 @@ Handled all interface design and client-side development.
 
 5. **Testimonials**
    - Carousel or grid layout  
-   - Connected to backend testimonial data  
+   - Connected to the backend testimonial data  
 
 6. **Contact Form Integration**
    - Styled form with validations  
    - Connects to backend (form submission & response handling)  
    - Displays success/error states  
 
-7. **Chatbot UI Component**
-   - Expandable widget interface  
-   - Includes chat bubbles, loading states, and UX animations  
+7. **Client Dashboard**
+   - Project tracking  
+   - Past project gallery
+   - Profile editing & password management
+   - Status box + file download button
+  
+9. **Employee Dashboard**
+   - File uploads (.jpg, .png, .pdf)
+   - External link submission
+   - Profile editing & password management
 
 ---
+
+## 🏗️ Frontend Architecture Overview
+
+```txt
+Frontend (React)
+│
+├── Public Website
+│   ├── Homepage animations
+│   ├── Services, Portfolio, About
+│   └── Contact Form
+│
+├── Client Dashboard
+│   ├── Sidebar, Header
+│   ├── Project Timeline + Past Gallery
+│   └── Account Page (Info + Settings)
+│
+└── Employee Dashboard
+    ├── Upload files
+    └── Submit links (e.g. WeTransfer)
 
 ## 🧑‍💻 Backend – Frank D
 
@@ -104,7 +136,7 @@ python manage.py runserver
 
 ---
 
-## 💻 Frontend (React)/ Back end (Django) intergration 
+## 💻 Frontend (React)/ Backend (Django) intergration 
 
 ### Features:
 - 🔐 Auth (JWT + Google SSO)
@@ -140,3 +172,5 @@ src/
 | 📝 Report submission      | Client receives email automatically      |
 | 📊 Analytics              | Only admin can view                      |
 
+## Link to the deployed site
+https://bowhle.github.io/bowhle-project
